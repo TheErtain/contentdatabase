@@ -1,26 +1,35 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
+// Components
+import Navbar from "./components/Navbar";
+
+// Layout
+import Dashboard from "./layout/Dashboard";
+import Bluray from "./layout/Bluray";
+import Dvd from "./layout/Dvd";
+import DownMovies from "./layout/DownMovies";
+import TvShows from "./layout/TvShows";
+import Anime from "./layout/Anime";
+
+import "./App.css";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Router>
+        <div className="App">
+          <Navbar />
+          <Switch>
+            <Route exact path="/" component={Dashboard} />
+            <Route exact path="/bluray" component={Bluray} />
+            <Route exact path="/dvd" component={Dvd} />
+            <Route exact path="/dmovies" component={DownMovies} />
+            <Route exact path="/tv" component={TvShows} />
+            <Route exact path="/anime" component={Anime} />
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }
