@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import { Provider } from "react-redux";
-import store from "./store";
-
 // Components
 import Navbar from "./components/Navbar";
 
@@ -20,21 +17,19 @@ import "./App.css";
 class App extends Component {
   render() {
     return (
-      <Provider store={store}>
-        <Router>
-          <div className="App">
-            <Navbar />
-            <Switch>
-              <Route exact path="/" component={Dashboard} />
-              <Route exact path="/bluray" component={Bluray} />
-              <Route exact path="/dvd" component={Dvd} />
-              <Route exact path="/dmovies" component={DownMovies} />
-              <Route exact path="/tv" component={TvShows} />
-              <Route exact path="/anime" component={Anime} />
-            </Switch>
-          </div>
-        </Router>
-      </Provider>
+      <Router>
+        <div className="App">
+          <Navbar />
+          <Switch>
+            <Route exact path="/" component={Dashboard} />
+            <Route exact path="/bluray" component={Bluray} />
+            <Route exact path="/dvd" component={Dvd} />
+            <Route exact path="/dmovies" component={DownMovies} />
+            <Route exact path="/tv" component={TvShows} />
+            <Route exact path="/anime" component={Anime} />
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }
