@@ -9,19 +9,37 @@ const divStyle = {
 };
 
 export default class Anime extends Component {
+  state = {
+    animeName: "",
+    numberOfEps: "",
+    url: ""
+  };
+
+  onChange = e => {
+    e.preventDefault();
+
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
   render() {
     return (
-      <div style={divStyle}>
-        <div className="d-flex justify-content-center align-items-center">
-          <div className="w-25 bg-secondary col-md-4">
+      <div
+        style={divStyle}
+        className="d-flex justify-content-center align-items-center"
+      >
+        <form onSubmit={this.onSubmit}>
+          <div
+            className="bg-secondary"
+            style={{ width: 500, paddingLeft: 20, paddingRight: 20 }}
+          >
             <h1 className="text-white text-center">Anime</h1>
             <input
               type="text"
               className="form-control mb-4"
               name="animeName"
               required
-              value=""
-              onChange=""
+              value={this.state.animeName}
+              onChange={this.onChange}
               placeholder="Enter an anime name..."
             />
             <input
@@ -29,12 +47,29 @@ export default class Anime extends Component {
               className="form-control mb-4"
               name="numberOfEps"
               required
-              value=""
-              onChange=""
+              value={this.state.numberOfEps}
+              onChange={this.onChange}
               placeholder="How many episodes?"
             />
+            <input
+              type="url"
+              className="form-control mb-4"
+              name="url"
+              required
+              value={this.state.url}
+              onChange={this.onChange}
+              placeholder="AniDB url..."
+            />
+            <div className="d-flex justify-content-center">
+              <input
+                type="submit"
+                className="btn btn-success mb-4"
+                value="Submit"
+                onChange={this.onChange}
+              />
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     );
   }
