@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import * as firebase from "firebase/app";
 
 const myBackgroundImage = require("./Bluraypic.jpg");
 const divStyle = {
@@ -7,7 +10,7 @@ const divStyle = {
   backgroundImage: `url(${myBackgroundImage})`
 };
 
-export default class Blueray extends Component {
+class Bluray extends Component {
   state = {
     blueRayName: "",
     numberOfEps: "",
@@ -17,9 +20,11 @@ export default class Blueray extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    localStorage.setItem("blu-ray", this.state.blueRayName);
-    localStorage.setItem("blunumeps", this.state.numberOfEps);
-    localStorage.setItem("blu-url", this.state.url);
+    firebase.database.ref("users/").set({
+      bluName: this.state.blueRayName,
+      numberOfEps: this.state.numberOfEps,
+      url: this.state.url
+    });
 
     this.setState({
       blueRayName: "",
@@ -100,3 +105,5 @@ export default class Blueray extends Component {
     );
   }
 }
+
+export default compose(connect())(Bluray);
