@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import { firestoreConnect } from "react-redux-firebase";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import "firebase/firestore";
 
 const myBackgroundImage = require("./MoviepicCollage.jpg");
 const divStyle = {
@@ -9,11 +13,29 @@ const divStyle = {
   backgroundRepeat: "no-repeat"
 };
 
-export default class DownMovies extends Component {
+class DownMovies extends Component {
   state = {
     movieName: "",
     numberOfEps: "",
     url: ""
+  };
+
+  onSubmit = e => {
+    e.preventDefault();
+
+    const newMovie = this.state;
+
+    const { firestore, history } = this.props;
+
+    firestore
+      .add({ collection: "movies" }, newMovie)
+      .then(() => history.push("/dmovies"));
+
+    this.setState({
+      movieName: "",
+      numberOfEps: "",
+      url: ""
+    });
   };
 
   onChange = e => {
@@ -88,3 +110,8 @@ export default class DownMovies extends Component {
     );
   }
 }
+
+export default compose(
+  firestoreConnect(),
+  connect((state, props) => ({}))
+)(DownMovies);

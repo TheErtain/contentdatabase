@@ -1,4 +1,9 @@
 import React, { Component } from "react";
+import { firestoreConnect } from "react-redux-firebase";
+
+import { compose } from "redux";
+import { connect } from "react-redux";
+import "firebase/firestore";
 
 const myBackgroundImage = require("./Dvdpic.jpg");
 const divStyle = {
@@ -9,11 +14,29 @@ const divStyle = {
   backgroundRepeat: "no-repeat"
 };
 
-export default class Dvd extends Component {
+class Dvd extends Component {
   state = {
     dvdName: "",
     numberOfEps: "",
     url: ""
+  };
+
+  onSubmit = e => {
+    e.preventDefault();
+
+    const newDvd = this.state;
+
+    const { firestore, history } = this.props;
+
+    firestore
+      .add({ collection: "dvds" }, newDvd)
+      .then(() => history.push("dvd"));
+
+    this.setState({
+      dvdName: "",
+      numberOfEps: "",
+      url: ""
+    });
   };
 
   onChange = e => {
@@ -88,3 +111,8 @@ export default class Dvd extends Component {
     );
   }
 }
+
+export default compose(
+  firestoreConnect(),
+  connect((state, props) => ({}))
+)(Dvd);

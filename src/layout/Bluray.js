@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import { firestoreConnect } from "react-redux-firebase";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import "firebase/firestore";
 
 const myBackgroundImage = require("./Bluraypic.jpg");
 const divStyle = {
@@ -16,6 +20,14 @@ class Bluray extends Component {
 
   onSubmit = e => {
     e.preventDefault();
+
+    const newBlueray = this.state;
+
+    const { firestore, history } = this.props;
+
+    firestore
+      .add({ collection: "blurays" }, newBlueray)
+      .then(() => history.push("/bluray"));
 
     this.setState({
       blueRayName: "",
@@ -97,4 +109,7 @@ class Bluray extends Component {
   }
 }
 
-export default Bluray;
+export default compose(
+  firestoreConnect(),
+  connect((state, props) => ({}))
+)(Bluray);
