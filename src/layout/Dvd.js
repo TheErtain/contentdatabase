@@ -17,7 +17,7 @@ const divStyle = {
 class Dvd extends Component {
   state = {
     dvdName: "",
-    numberOfEps: "",
+
     url: ""
   };
 
@@ -34,7 +34,7 @@ class Dvd extends Component {
 
     this.setState({
       dvdName: "",
-      numberOfEps: "",
+
       url: ""
     });
   };
@@ -76,16 +76,7 @@ class Dvd extends Component {
               placeholder="Enter an dvd name..."
               style={{ boxShadow: "14px 12px 18px 3px #000000" }}
             />
-            <input
-              type="number"
-              className="form-control mb-4"
-              name="numberOfEps"
-              required
-              value={this.state.numberOfEps}
-              onChange={this.onChange}
-              placeholder="How many episodes?"
-              style={{ boxShadow: "14px 12px 18px 3px #000000" }}
-            />
+
             <input
               type="url"
               className="form-control mb-4"

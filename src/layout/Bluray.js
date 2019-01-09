@@ -14,7 +14,7 @@ const divStyle = {
 class Bluray extends Component {
   state = {
     blueRayName: "",
-    numberOfEps: "",
+
     url: ""
   };
 
@@ -31,7 +31,7 @@ class Bluray extends Component {
 
     this.setState({
       blueRayName: "",
-      numberOfEps: "",
+
       url: ""
     });
   };
@@ -73,16 +73,7 @@ class Bluray extends Component {
               placeholder="Enter an blueRay name..."
               style={{ boxShadow: "14px 12px 18px 3px #000000" }}
             />
-            <input
-              type="number"
-              className="form-control mb-4"
-              name="numberOfEps"
-              required
-              value={this.state.numberOfEps}
-              onChange={this.onChange}
-              placeholder="How many episodes?"
-              style={{ boxShadow: "14px 12px 18px 3px #000000" }}
-            />
+
             <input
               type="url"
               className="form-control mb-4"
