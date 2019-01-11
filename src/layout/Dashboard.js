@@ -6,6 +6,13 @@ import { connect } from "react-redux";
 import "firebase/firestore";
 import sort from "fast-sort";
 
+const myBackgroundImage = require("./Dashboardpic.jpg");
+const divStyle = {
+  width: "100%",
+  height: "100vh",
+  backgroundImage: `url(${myBackgroundImage})`
+};
+
 class Dashboard extends Component {
   state = {
     bluray: [{ name: "", url: "", id: "" }],
@@ -28,10 +35,8 @@ class Dashboard extends Component {
           id: doc.id
         });
       });
-
-      console.log(bluray);
       sort(bluray).asc(u => u.name);
-      console.log(bluray);
+
       this.setState({ bluray });
     });
     //getting dvds from firestore
@@ -45,7 +50,7 @@ class Dashboard extends Component {
           id: doc.id
         });
       });
-
+      sort(dvd).asc(u => u.name);
       this.setState({ dvd });
     });
     //getting movies from firestore
@@ -59,7 +64,7 @@ class Dashboard extends Component {
           id: doc.id
         });
       });
-
+      sort(movies).asc(u => u.name);
       this.setState({ movies });
     });
 
@@ -74,7 +79,7 @@ class Dashboard extends Component {
           id: doc.id
         });
       });
-
+      sort(tvShows).asc(u => u.name);
       this.setState({ tvShows });
     });
 
@@ -90,55 +95,79 @@ class Dashboard extends Component {
           id: doc.id
         });
       });
-
+      sort(anime).asc(u => u.name);
       this.setState({ anime });
     });
   }
 
   render() {
     return (
-      <div className="d-flex">
-        <div className="mt-1 border border-dark col-md-2 mr-5">
+      <div className="d-flex" style={divStyle}>
+        <div className="mt-1 border border-white col-md-2 mr-5">
+          <div className="border border-white text-center bg-dark">
+            <p className="text-white">Blu-Rays</p>
+          </div>
           {this.state.bluray.map(blu => {
             return (
               <p key={blu.id}>
-                <Link to={blu.url}>{blu.name}</Link>
+                <Link to={blu.url} className="text-white bg-dark">
+                  {blu.name}
+                </Link>
               </p>
             );
           })}
         </div>
-        <div className="mt-1 border border-dark col-md-2 mr-5">
+
+        <div className="mt-1 border border-white col-md-2 mr-5">
+          <div className="border border-white text-center bg-dark">
+            <p className="text-white">DVDs</p>
+          </div>
           {this.state.dvd.map(dvds => {
             return (
               <p key={dvds.id}>
-                <Link to={dvds.url}>{dvds.name}</Link>
+                <Link to={dvds.url} className="text-white bg-dark">
+                  {dvds.name}
+                </Link>
               </p>
             );
           })}
         </div>
-        <div className="mt-1 border border-dark col-md-2 mr-5">
+        <div className="mt-1 border border-white col-md-2 mr-5">
+          <div className="border border-white text-center bg-dark">
+            <p className="text-white">Downloaded Movies</p>
+          </div>
           {this.state.movies.map(movie => {
             return (
               <p key={movie.id}>
-                <Link to={movie.url}>{movie.name}</Link>
+                <Link to={movie.url} className="text-white bg-dark">
+                  {movie.name}
+                </Link>
               </p>
             );
           })}
         </div>
-        <div className="mt-1 border border-dark col-md-2 mr-5">
+        <div className="mt-1 border border-white col-md-2 mr-5">
+          <div className="border border-white text-center bg-dark">
+            <p className="text-white">Tv-Shows</p>
+          </div>
           {this.state.tvShows.map(tv => {
             return (
               <p key={tv.id}>
-                <Link to={tv.url}>{tv.name}</Link>
+                <Link to={tv.url} className="text-white bg-dark">
+                  {tv.name}
+                </Link>
               </p>
             );
           })}
         </div>
-        <div className="mt-1 border border-dark col-md-2 mr-5">
+        <div className="mt-1 border border-white col-md-2 mr-5">
+          <div className="border border-white text-center bg-dark">
+            <p className="text-white">Anime</p>
+          </div>
           {this.state.anime.map(ani => {
             return (
               <p key={ani.id}>
-                <Link to={ani.url}>
+                <Link to={ani.url} className="text-white bg-dark">
                   {ani.name}: {ani.eps}
                 </Link>
               </p>
