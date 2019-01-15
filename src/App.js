@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
+import { UserIsAuthenticated, UserIsNotAuthenticated } from "./helpers/auth";
 import { Provider } from "react-redux";
 import store from "./store";
 
 // Components
 import Navbar from "./components/Navbar";
+import Login from "./layout/Login";
+import Register from "./layout/Register";
 
 // Layout
 import Dashboard from "./layout/Dashboard";
@@ -25,12 +27,42 @@ class App extends Component {
           <div className="App">
             <Navbar />
             <Switch>
-              <Route exact path="/" component={Dashboard} />
-              <Route exact path="/bluray" component={Bluray} />
-              <Route exact path="/dvd" component={Dvd} />
-              <Route exact path="/dmovies" component={DownMovies} />
-              <Route exact path="/tv" component={TvShows} />
-              <Route exact path="/anime" component={Anime} />
+              <Route
+                exact
+                path="/"
+                component={UserIsAuthenticated(Dashboard)}
+              />
+              <Route
+                exact
+                path="/login"
+                component={UserIsNotAuthenticated(Login)}
+              />
+              <Route
+                exact
+                path="/reg"
+                component={UserIsNotAuthenticated(Register)}
+              />
+              <Route
+                exact
+                path="/bluray"
+                component={UserIsAuthenticated(Bluray)}
+              />
+              <Route exact path="/dvd" component={UserIsAuthenticated(Dvd)} />
+              <Route
+                exact
+                path="/dmovies"
+                component={UserIsAuthenticated(DownMovies)}
+              />
+              <Route
+                exact
+                path="/tv"
+                component={UserIsAuthenticated(TvShows)}
+              />
+              <Route
+                exact
+                path="/anime"
+                component={UserIsAuthenticated(Anime)}
+              />
             </Switch>
           </div>
         </Router>
