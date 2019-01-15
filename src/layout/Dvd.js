@@ -26,10 +26,15 @@ class Dvd extends Component {
 
     const newDvd = this.state;
 
-    const { firestore, history } = this.props;
+    const { firestore, history, firebase } = this.props;
+
+    let user = firebase.auth().currentUser;
 
     firestore
-      .add({ collection: "dvds" }, newDvd)
+      .collection("users")
+      .doc(user.uid)
+      .collection("dvds")
+      .add(newDvd)
       .then(() => history.push("dvd"));
 
     this.setState({

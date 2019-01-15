@@ -3,6 +3,7 @@ import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import "firebase/firestore";
+import "firebase/auth";
 
 const myBackgroundImage = require("./Bluraypic.jpg");
 const divStyle = {
@@ -14,8 +15,8 @@ const divStyle = {
 class Bluray extends Component {
   state = {
     blueRayName: "",
-
-    url: ""
+    url: "",
+    id: ""
   };
 
   onSubmit = e => {
@@ -23,10 +24,15 @@ class Bluray extends Component {
 
     const newBlueray = this.state;
 
-    const { firestore, history } = this.props;
+    const { firestore, history, firebase } = this.props;
+
+    let user = firebase.auth().currentUser;
 
     firestore
-      .add({ collection: "blurays" }, newBlueray)
+      .collection("users")
+      .doc(user.uid)
+      .collection("blurays")
+      .add(newBlueray)
       .then(() => history.push("/bluray"));
 
     this.setState({

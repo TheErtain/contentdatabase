@@ -25,10 +25,15 @@ class Anime extends Component {
 
     const newAnime = this.state;
 
-    const { firestore, history } = this.props;
+    const { firestore, history, firebase } = this.props;
+
+    let user = firebase.auth().currentUser;
 
     firestore
-      .add({ collection: "animes" }, newAnime)
+      .collection("users")
+      .doc(user.uid)
+      .collection("animes")
+      .add(newAnime)
       .then(() => history.push("/anime"));
 
     this.setState({

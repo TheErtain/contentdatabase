@@ -25,10 +25,15 @@ class DownMovies extends Component {
 
     const newMovie = this.state;
 
-    const { firestore, history } = this.props;
+    const { firestore, history, firebase } = this.props;
+
+    let user = firebase.auth().currentUser;
 
     firestore
-      .add({ collection: "movies" }, newMovie)
+      .collection("users")
+      .doc(user.uid)
+      .collection("movies")
+      .add(newMovie)
       .then(() => history.push("/dmovies"));
 
     this.setState({

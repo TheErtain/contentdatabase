@@ -25,10 +25,15 @@ class TvShows extends Component {
 
     const newTvShow = this.state;
 
-    const { firestore, history } = this.props;
+    const { firestore, history, firebase } = this.props;
+
+    let user = firebase.auth().currentUser;
 
     firestore
-      .add({ collection: "tvshows" }, newTvShow)
+      .collection("users")
+      .doc(user.uid)
+      .collection("tvshows")
+      .add(newTvShow)
       .then(() => history.push("/tv"));
 
     this.setState({

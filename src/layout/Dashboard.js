@@ -24,81 +24,108 @@ class Dashboard extends Component {
   };
 
   componentDidMount() {
-    const { firestore } = this.props;
+    const { firestore, firebase } = this.props;
+    let user = firebase.auth().currentUser;
     // getting blurays from firestore
-    firestore.get({ collection: "blurays" }).then(blurayFunc => {
-      const bluray = [];
+    firestore
+      .collection("users")
+      .doc(user.uid)
+      .collection("blurays")
+      .get()
 
-      blurayFunc.forEach(function(doc) {
-        bluray.push({
-          name: doc.data().blueRayName,
-          url: doc.data().url,
-          id: doc.id
+      .then(blurayFunc => {
+        const bluray = [];
+
+        blurayFunc.forEach(function(doc) {
+          bluray.push({
+            name: doc.data().blueRayName,
+            url: doc.data().url,
+            id: doc.id
+          });
         });
-      });
-      sort(bluray).asc(u => u.name);
+        sort(bluray).asc(u => u.name);
 
-      this.setState({ bluray });
-    });
+        this.setState({ bluray });
+      });
     //getting dvds from firestore
-    firestore.get({ collection: "dvds" }).then(dvdFunc => {
-      const dvd = [];
+    firestore
+      .collection("users")
+      .doc(user.uid)
+      .collection("dvds")
+      .get()
+      .then(dvdFunc => {
+        const dvd = [];
 
-      dvdFunc.forEach(function(doc) {
-        dvd.push({
-          name: doc.data().dvdName,
-          url: doc.data().url,
-          id: doc.id
+        dvdFunc.forEach(function(doc) {
+          dvd.push({
+            name: doc.data().dvdName,
+            url: doc.data().url,
+            id: doc.id
+          });
         });
+        sort(dvd).asc(u => u.name);
+        this.setState({ dvd });
       });
-      sort(dvd).asc(u => u.name);
-      this.setState({ dvd });
-    });
     //getting movies from firestore
-    firestore.get({ collection: "movies" }).then(movieFunc => {
-      const movies = [];
+    firestore
+      .collection("users")
+      .doc(user.uid)
+      .collection("movies")
+      .get()
+      .then(movieFunc => {
+        const movies = [];
 
-      movieFunc.forEach(function(doc) {
-        movies.push({
-          name: doc.data().movieName,
-          url: doc.data().url,
-          id: doc.id
+        movieFunc.forEach(function(doc) {
+          movies.push({
+            name: doc.data().movieName,
+            url: doc.data().url,
+            id: doc.id
+          });
         });
+        sort(movies).asc(u => u.name);
+        this.setState({ movies });
       });
-      sort(movies).asc(u => u.name);
-      this.setState({ movies });
-    });
 
     //getting tv shows from firestore
-    firestore.get({ collection: "tvshows" }).then(tvFunc => {
-      const tvShows = [];
+    firestore
+      .collection("users")
+      .doc(user.uid)
+      .collection("tvshows")
+      .get()
+      .then(tvFunc => {
+        const tvShows = [];
 
-      tvFunc.forEach(function(doc) {
-        tvShows.push({
-          name: doc.data().tvShowName,
-          url: doc.data().url,
-          id: doc.id
+        tvFunc.forEach(function(doc) {
+          tvShows.push({
+            name: doc.data().tvShowName,
+            url: doc.data().url,
+            id: doc.id
+          });
         });
+        sort(tvShows).asc(u => u.name);
+        this.setState({ tvShows });
       });
-      sort(tvShows).asc(u => u.name);
-      this.setState({ tvShows });
-    });
 
     //getting anime from firestore
-    firestore.get({ collection: "animes" }).then(animeFunc => {
-      const anime = [];
+    firestore
+      .collection("users")
+      .doc(user.uid)
+      .collection("animes")
+      .get()
+      .then(animeFunc => {
+        const anime = [];
 
-      animeFunc.forEach(function(doc) {
-        anime.push({
-          name: doc.data().animeName,
-          eps: doc.data().numberOfEps,
-          url: doc.data().url,
-          id: doc.id
+        animeFunc.forEach(function(doc) {
+          anime.push({
+            name: doc.data().animeName,
+            eps: doc.data().numberOfEps,
+            url: doc.data().url,
+            id: doc.id
+          });
         });
+        sort(anime).asc(u => u.name);
+        this.setState({ anime });
       });
-      sort(anime).asc(u => u.name);
-      this.setState({ anime });
-    });
   }
 
   render() {
