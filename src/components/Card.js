@@ -13,13 +13,13 @@ export default class Card extends Component {
   onDelete = e => {
     e.preventDefault();
 
-    // const deletion = window.confirm("Are you sure you want to delete?");
+    const deletion = window.confirm("Are you sure you want to delete?");
 
-    // if (deletion === false) {
-    //   console.log("cancel");
-    // } else {
-    //   console.log("ok");
-    // }
+    if (deletion === false) {
+      console.log("cancel");
+    } else {
+      console.log("ok");
+    }
   };
   render() {
     const arr = this.props.array;
@@ -47,15 +47,13 @@ export default class Card extends Component {
               <Link to={gen.url} className="text-white">
                 {gen.name}
               </Link>
-              <SweetAlert title="Here's a message!" onConfirm={this.onConfirm}>
-                <button
-                  className="btn btn-sm"
-                  style={{ float: "right", backgroundColor: "rgba(0,0,0,0)" }}
-                  onClick={this.onDelete}
-                >
-                  <i className="fas fa-times text-danger" />
-                </button>
-              </SweetAlert>
+              <button
+                className="btn btn-sm"
+                style={{ float: "right", backgroundColor: "rgba(0,0,0,0)" }}
+                onClick={this.onDelete}
+              >
+                <i className="fas fa-times text-danger" />
+              </button>
             </div>
           );
         })}
