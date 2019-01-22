@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { firebaseConnect } from "react-redux-firebase";
-import { notifyUser, clearErrors } from "../actions/notifyActions";
+import { notifyUser } from "../actions/notifyActions";
 import Alert from "../layout/Alert";
 
 class Register extends Component {
@@ -114,6 +114,6 @@ export default compose(
   firebaseConnect(),
   connect(
     mapStateToProps,
-    { notifyUser, clearErrors }
+    { notifyUser }
   )
 )(Register);

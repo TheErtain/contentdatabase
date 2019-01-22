@@ -1,4 +1,4 @@
-import { NOTIFY_USER, CLEAR_ERRORS } from "../actions/types";
+import { NOTIFY_USER } from "../actions/types";
 
 const initialState = {
   message: "",
@@ -13,12 +13,7 @@ export default function(state = initialState, action) {
         message: action.message,
         messageType: action.messageType
       };
-    case CLEAR_ERRORS:
-      return {
-        ...state,
-        message: "",
-        messageType: ""
-      };
+
     default:
       return state;
   }

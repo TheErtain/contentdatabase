@@ -1,4 +1,5 @@
-import { createStore, combineReducers, compose } from "redux";
+import { createStore, combineReducers, compose, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
 import * as firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
@@ -6,6 +7,7 @@ import "firebase/database";
 import { reactReduxFirebase, firebaseReducer } from "react-redux-firebase";
 import { reduxFirestore, firestoreReducer } from "redux-firestore";
 import notifyReducer from "./reducers/notifyReducers";
+import videoReducer from "./reducers/videoReducers";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBrxDCZ4AbiON3F29uxl8KEBLyxF-vMwsc",
@@ -15,6 +17,8 @@ const firebaseConfig = {
   storageBucket: "movie-database-ecafe.appspot.com",
   messagingSenderId: "56252694643"
 };
+
+const middleware = [thunk];
 
 // react-redux-firebase config
 const rrfConfig = {
@@ -38,7 +42,8 @@ const createStoreWithFirebase = compose(
 const rootReducer = combineReducers({
   firebase: firebaseReducer,
   firestore: firestoreReducer, // <- needed if using firestore
-  notify: notifyReducer
+  notify: notifyReducer,
+  video: videoReducer
 });
 const initialState = {};
 
@@ -47,6 +52,7 @@ const store = createStoreWithFirebase(
   initialState,
   compose(
     reactReduxFirebase(firebase),
+    applyMiddleware(...middleware),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 );

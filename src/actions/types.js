@@ -1,2 +1,2 @@
 export const NOTIFY_USER = "NOTIFY_USER";
-export const CLEAR_ERRORS = "CLEAR_ERRORS";
+export const ATTACH_VIDEO = "ATTACH_VIDEO";

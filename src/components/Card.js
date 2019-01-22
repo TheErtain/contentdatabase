@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./Card.css";
-const SweetAlert = require("react-bootstrap-sweetalert");
+import { firestoreConnect } from "react-redux-firebase";
 
 const myCursorImage = require("../images/dragoncursor.cur");
 const cursorStyle = {
@@ -9,20 +9,10 @@ const cursorStyle = {
   cursor: `url(${myCursorImage}), auto`
 };
 
-export default class Card extends Component {
-  onDelete = e => {
-    e.preventDefault();
-
-    const deletion = window.confirm("Are you sure you want to delete?");
-
-    if (deletion === false) {
-      console.log("cancel");
-    } else {
-      console.log("ok");
-    }
-  };
+class Card extends Component {
   render() {
     const arr = this.props.array;
+
     return (
       <span
         className="mt-1 ml-5 mb-3 border border-white col-md-2"
@@ -37,6 +27,7 @@ export default class Card extends Component {
         >
           <p className="text-white m-auto">{this.props.name}</p>
         </div>
+
         {arr.map(gen => {
           return (
             <div
@@ -50,7 +41,7 @@ export default class Card extends Component {
               <button
                 className="btn btn-sm"
                 style={{ float: "right", backgroundColor: "rgba(0,0,0,0)" }}
-                onClick={this.onDelete}
+                onClick={e => this.props.onDelete(e, gen.id, gen.collection)}
               >
                 <i className="fas fa-times text-danger" />
               </button>
@@ -61,3 +52,5 @@ export default class Card extends Component {
     );
   }
 }
+
+export default firestoreConnect()(Card);

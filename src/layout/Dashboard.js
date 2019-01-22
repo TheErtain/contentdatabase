@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import "firebase/firestore";
 import sort from "fast-sort";
 import "./dashboard.css";
@@ -16,14 +17,15 @@ const divStyle = {
 
 class Dashboard extends Component {
   state = {
-    bluray: [{ name: "", url: "", id: "" }],
-    dvd: [{ name: "", url: "", id: "" }],
-    movies: [{ name: "", url: "", id: "" }],
-    tvShows: [{ name: "", url: "", id: "" }],
-    anime: [{ name: "", url: "", id: "" }]
+    bluray: [{ name: "", url: "", id: "", collection: "" }],
+    dvd: [{ name: "", url: "", id: "", collection: "" }],
+    movies: [{ name: "", url: "", id: "", collection: "" }],
+    tvShows: [{ name: "", url: "", id: "", collection: "" }],
+    anime: [{ name: "", url: "", id: "", collection: "" }],
+    index: 0
   };
 
-  componentDidMount() {
+  getFirebaseVideos = () => {
     const { firestore, firebase } = this.props;
     let user = firebase.auth().currentUser;
     // getting blurays from firestore
@@ -40,7 +42,8 @@ class Dashboard extends Component {
           bluray.push({
             name: doc.data().blueRayName,
             url: doc.data().url,
-            id: doc.id
+            id: doc.id,
+            collection: "blurays"
           });
         });
         sort(bluray).asc(u => u.name);
@@ -60,7 +63,8 @@ class Dashboard extends Component {
           dvd.push({
             name: doc.data().dvdName,
             url: doc.data().url,
-            id: doc.id
+            id: doc.id,
+            collection: "dvds"
           });
         });
         sort(dvd).asc(u => u.name);
@@ -79,7 +83,8 @@ class Dashboard extends Component {
           movies.push({
             name: doc.data().movieName,
             url: doc.data().url,
-            id: doc.id
+            id: doc.id,
+            collection: "movies"
           });
         });
         sort(movies).asc(u => u.name);
@@ -99,7 +104,8 @@ class Dashboard extends Component {
           tvShows.push({
             name: doc.data().tvShowName,
             url: doc.data().url,
-            id: doc.id
+            id: doc.id,
+            collection: "tvshows"
           });
         });
         sort(tvShows).asc(u => u.name);
@@ -120,22 +126,57 @@ class Dashboard extends Component {
             name: doc.data().animeName,
             eps: doc.data().numberOfEps,
             url: doc.data().url,
-            id: doc.id
+            id: doc.id,
+            collection: "animes"
           });
         });
         sort(anime).asc(u => u.name);
         this.setState({ anime });
       });
+  };
+  componentDidMount() {
+    this.getFirebaseVideos();
   }
+
+  onDelete = (e, id, collection) => {
+    e.preventDefault();
+    const { firebase, firestore } = this.props;
+
+    let user = firebase.auth().currentUser;
+
+    const deletion = window.confirm("Are you sure you want to delete?");
+
+    if (deletion === true) {
+      firestore
+        .collection("users")
+        .doc(user.uid)
+        .collection(collection)
+        .doc(id)
+        .delete()
+        .then(() => this.getFirebaseVideos());
+    }
+  };
 
   render() {
     return (
       <div className="d-flex" style={divStyle}>
-        <Card name="Blu-Ray" array={this.state.bluray} />
-        <Card name="DVD" array={this.state.dvd} />
-        <Card name="Downloaded Movies" array={this.state.movies} />
-        <Card name="Tv-Shows" array={this.state.tvShows} />
-        <Card name="Anime" array={this.state.anime} />
+        <Card
+          name="Blu-Ray"
+          array={this.state.bluray}
+          onDelete={this.onDelete}
+        />
+        <Card name="DVD" array={this.state.dvd} onDelete={this.onDelete} />
+        <Card
+          name="Downloaded Movies"
+          array={this.state.movies}
+          onDelete={this.onDelete}
+        />
+        <Card
+          name="Tv-Shows"
+          array={this.state.tvShows}
+          onDelete={this.onDelete}
+        />
+        <Card name="Anime" array={this.state.anime} onDelete={this.onDelete} />
       </div>
     );
   }
@@ -143,5 +184,10 @@ class Dashboard extends Component {
 
 export default compose(
   firestoreConnect(),
-  connect((state, props) => ({}))
-)(Dashboard);
+  connect(
+    (state, props) => ({
+      notify: state.notify
+    }),
+    {}
+  )
+)(withRouter(Dashboard));
