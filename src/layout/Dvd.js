@@ -5,7 +5,7 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import "firebase/firestore";
 
-const myBackgroundImage = require("./Dvdpic.jpg");
+const myBackgroundImage = require("../images/Dvdpic.jpg");
 const divStyle = {
   width: "100%",
   height: "100vh",

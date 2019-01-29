@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import "firebase/firestore";
 import "firebase/auth";
 
-const myBackgroundImage = require("./Bluraypic.jpg");
+const myBackgroundImage = require("../images/Bluraypic.jpg");
 const divStyle = {
   width: "100%",
   height: "100vh",

@@ -8,7 +8,7 @@ import sort from "fast-sort";
 import "./dashboard.css";
 import Card from "../components/Card";
 
-const myBackgroundImage = require("./Dashboardpic.jpg");
+const myBackgroundImage = require("../images/Dashboardpic.jpg");
 const divStyle = {
   width: "100%",
   height: "100vh",

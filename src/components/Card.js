@@ -45,6 +45,14 @@ class Card extends Component {
               >
                 <i className="fas fa-times text-danger" />
               </button>
+              <Link to="/edit">
+                <button
+                  className="btn btn-sm"
+                  style={{ float: "right", backgroundColor: "rgba(0,0,0,0)" }}
+                >
+                  <i className="fas fa-edit text-success" />
+                </button>
+              </Link>
             </div>
           );
         })}
